@@ -1,14 +1,13 @@
 import CountryList from './components/CountryList/CountryList'
 import "bootstrap/dist/css/bootstrap.min.css";
 import './App.css'
-//import Test from './components/Test/Test'
+import TestCountry from './components/Test/TestCountry';
 
-function App() {  
+function App() {
   
   return (
-    <>
-      <CountryList />
-       
+    <>      
+       <TestCountry />
     </>
   )
 }

@@ -1,62 +1,23 @@
-import { useEffect, useState } from "react";
-import { Card, Container, Dropdown, Row,Col, Spinner } from "react-bootstrap"
+import { useState } from "react";
+import { Card, Container, Dropdown, Row,Col, Spinner } from "react-bootstrap";
+import { useCountries, type Country } from "../../hooks/useCountries";
 
-
-const REST_COUNTRIES_API_URL : string = ("https://countriesnow.space/api/v0.1/countries");
-
-type Country = {
-    country: string;
-    cities: string[];
-};
-
-type ApiResponse = {
-    error: boolean;
-    msg: string;
-    data: Country[];
-};
-
-const CountryList = () => {
-    const [data, setData] = useState<ApiResponse | null>(null);
-    const [isLoading, setIsLoading] = useState(true);
-    const [error, setError] = useState<Error | null>(null);
-    const [selectedItem, setSelectedItem] = useState("Paises")
-
-    useEffect(() => {
-        const fetchData = async () => {
-            try{
-                let response = await fetch(REST_COUNTRIES_API_URL);
-                if(!response.ok){
-                    throw new Error (`Error fetching data. Status: ${response.status}`);
-                }
-                let result = await response.json();
-                setData(result);
-            }catch (err){
-                setError(err as Error);
-            }
-            finally{
-                setIsLoading(false);
-            }
-        }
-        fetchData();
-    }, [])
-    
-    if(isLoading){
-        return(
-        <Spinner animation="border">
-            <div>Loading...</div>
-        </Spinner>
-        )
-    }
-    if (error){
-        return <div>Error: ${error.message}</div>
-    }
+const TestCountry = () => {
+    const {data, isLoading, error} = useCountries();
+    const [selectedItem, setSelectedItem] = useState("Paises");
 
     const handleSelect = (eventKey: string | null) => {
         if (eventKey) {
             setSelectedItem(eventKey);
         }
     }
-                
+     if(isLoading){
+        return <div>Cargando...</div>
+    }
+    if(error){
+        return <div>Error: {error.message}</div>
+    }
+
     return(
         <>
         <Container fluid="lg">
@@ -90,5 +51,4 @@ const CountryList = () => {
         </>
     )
 }
-export default CountryList;
-
+export default TestCountry
