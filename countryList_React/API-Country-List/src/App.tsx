@@ -1,12 +1,13 @@
-import { useState } from 'react'
 import CountryList from './components/CountryList/CountryList'
+import "bootstrap/dist/css/bootstrap.min.css";
 import './App.css'
+import TestCountry from './components/Test/TestCountry';
 
-function App() {  
+function App() {
   
   return (
-    <>
-      <CountryList />    
+    <>      
+       <TestCountry />
     </>
   )
 }
