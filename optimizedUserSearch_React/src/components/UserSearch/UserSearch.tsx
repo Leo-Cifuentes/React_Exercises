@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useMemo } from 'react'
-import { useUsers, type User } from '../../hooks/useUsers';
+import { useUsers } from '../../hooks/useUsers';
 
 function UserSearch() {    
     const {users, error, isLoading, addUser} = useUsers();
