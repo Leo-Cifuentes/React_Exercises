@@ -1,0 +1,20 @@
+
+type ButtonProps = {
+    buttonText: string, onFetch: () => void;
+}
+
+const Button = ({ buttonText, onFetch }: ButtonProps) => {
+
+    return (
+        <>
+            <button
+                type="button"
+                onClick={onFetch}
+                className="m-3 px-8 py-3 bg-gray-300 hover:bg-gray-500 text-gray-800 hover:text-white rounded-full cursor-pointer">
+                {buttonText}
+            </button>
+        </>
+    )
+}
+
+export default Button;
