@@ -1,7 +1,8 @@
 
-import { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import Button from './components/Button';
 import ScrollToTopButton from './components/ScrollToTopButton';
+import Modal from './components/Modal';
 import './App.css'
 
 const URL_API_WORLD: string = ('https://countriesnow.space/api/v0.1/countries');
@@ -28,6 +29,8 @@ function App() {
   const [debouncedSearch, setDebouncedSearch] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const tableRef = useRef<HTMLTableElement | null>(null);
+  const [modalContent, setModalContent] = useState<React.ReactNode>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   //-- Fetch Data --
   const fetchWorld = async () => {
@@ -141,20 +144,46 @@ function App() {
           </h1>
         </section>
         <section className='flex justify-center-safe max-w-5xl mx-auto'>
-          <Button buttonText='Countries & Cities' onFetch={fetchWorld} />
+          <Button buttonText='Countries & Cities' onClick={fetchWorld} />
         </section>
         <hr />
         <section className='flex justify-center-safe max-w-5xl mx-auto'>
-          <input type="text"
-            name='searchBar'
-            placeholder='Buscar país o ciudad...'
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className='my-2 px-4 py-2 bg-white min-w-xl rounded-2xl'
-          />
+          <form className='my-2 min-w-xl max-w-2xl mx-auto'>
+            <label htmlFor="search" className="block mb-2.5 text-sm font-medium text-heading sr-only ">Search</label>
+            <div className="relative">
+              <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                <svg className="w-4 h-4 text-body" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" strokeLinecap="round" strokeWidth="2" d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z" /></svg>
+              </div>
+              <input type="search"
+                name="searchBar"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="block w-full p-3 ps-9 bg-white border border-default-medium text-heading text-sm rounded-2xl focus:ring-brand focus:border-brand shadow-xs placeholder:text-body"
+                placeholder="Buscar país o ciudad..."
+                required />
+            </div>
+          </form>
         </section>
         <hr />
         <section>
+          <div className='flex justify-center-safe max-w-5xl mx-auto'>
+            <Button
+              buttonText='Ver Info'
+              onClick={() => {
+                setModalContent(
+                  <>
+                    <h1 className='text-2xl font-bold'>Title</h1>
+                    <p>First paragraph.</p>
+                    <p>Second Paragraph.</p>
+                  </>
+                );
+                setIsModalOpen(true);
+              }
+              } />
+          </div>
+          <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+            {modalContent}
+          </Modal>
           {
             dataWorld && totalRows > 0 && (
               <div className="flex justify-center gap-4 mt-4 mb-10">
