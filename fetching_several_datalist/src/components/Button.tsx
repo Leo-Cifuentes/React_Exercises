@@ -1,16 +1,16 @@
 
 type ButtonProps = {
-    buttonText: string, onFetch: () => void;
+    buttonText: string, onClick?: () => void;
 }
 
-const Button = ({ buttonText, onFetch }: ButtonProps) => {
+const Button = ({ buttonText, onClick }: ButtonProps) => {
 
     return (
         <>
             <button
                 type="button"
-                onClick={onFetch}
-                className="m-3 px-8 py-3 bg-gray-300 hover:bg-gray-500 text-gray-800 hover:text-white rounded-full cursor-pointer">
+                onClick={onClick}                
+                className="m-3 px-8 py-3 bg-blue-600 hover:bg-indigo-700 text-white rounded-full cursor-pointer">
                 {buttonText}
             </button>
         </>
